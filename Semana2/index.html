@@ -5,17 +5,253 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coca-Cola - Destapa la Felicidad</title>
+    <style>
+        /* Estilos Generales y Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7f7f7;
+            color: #333333;
+            line-height: 1.6;
+            padding-bottom: 40px;
+        }
+
+        /* Encabezado (Header) */
+        header {
+            background-color: #e31837; /* Rojo Coca-Cola */
+            color: #ffffff;
+            text-align: center;
+            padding: 45px 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 800;
+        }
+
+        header p {
+            font-size: 1.3rem;
+            font-style: italic;
+            color: #ffffff; /* Color blanco de alta visibilidad */
+            text-align: center; /* Centrado absoluto de la frase */
+            font-weight: 600; /* Mayor grosor de letra */
+            margin-top: 10px;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4); /* Sombra de contraste para legibilidad */
+        }
+
+        /* Menú de Navegación (Nav) */
+        nav {
+            background-color: #111111;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            display: block;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 15px 20px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background-color: #e31837;
+            color: #ffffff;
+        }
+
+        /* Contenedor Principal (Main) y Secciones */
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        section {
+            background-color: #ffffff;
+            padding: 40px;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        /* Títulos de las Secciones */
+        h2 {
+            color: #e31837;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            width: 60px;
+            height: 3px;
+            background-color: #111111;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        h3 {
+            color: #111111;
+            margin: 25px 0 15px 0;
+            font-size: 1.3rem;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: #555555;
+            font-size: 1.05rem;
+            text-align: justify;
+        }
+
+        #inicio p {
+            text-align: center;
+            font-size: 1.15rem;
+            max-width: 750px;
+            margin: 0 auto;
+        }
+
+        hr {
+            border: none;
+            margin: 10px 0;
+        }
+
+        /* Imágenes */
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-top: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Listas (ul / li de Productos) */
+        #servicios-productos ul {
+            list-style: none;
+            max-width: 700px;
+            margin: 0 auto 25px auto;
+            text-align: left;
+        }
+
+        #servicios-productos ul li {
+            background-color: #f9f9f9;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-left: 4px solid #e31837;
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* Videos (Iframe) */
+        iframe {
+            max-width: 100%;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            margin-top: 15px;
+        }
+
+        /* Enlaces de contacto y redes */
+        a {
+            color: #e31837;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        a:hover {
+            color: #111111;
+            text-decoration: underline;
+        }
+
+        #contacto p {
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        /* Barra Lateral (Aside) */
+        aside {
+            max-width: 900px;
+            margin: 0 auto 40px auto;
+            background-color: #111111;
+            color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        aside h3 {
+            color: #e31837;
+            margin-top: 0;
+            font-size: 1.5rem;
+        }
+
+        aside p {
+            color: #dddddd;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        aside strong {
+            color: #ffffff;
+        }
+
+        /* Pie de Página (Footer) */
+        footer {
+            background-color: #111111;
+            color: #aaaaaa;
+            text-align: center;
+            padding: 25px 20px;
+            font-size: 0.9rem;
+            border-top: 3px solid #e31837;
+        }
+
+        footer p {
+            color: #aaaaaa;
+            text-align: center;
+            margin: 0;
+        }
+    </style>
 </head>
 
 <body>
 
-    <!-- Encabezado principal de la página -->
     <header>
         <h1>Coca-Cola</h1>
         <p>Refrescando al mundo y haciendo la diferencia a través de nuestras bebidas</p>
     </header>
 
-    <!-- Menú de navegación con enlaces internos (Anclas) -->
     <nav>
         <ul>
             <li><a href="#inicio">Inicio</a></li>
@@ -25,10 +261,8 @@
         </ul>
     </nav>
 
-    <!-- Contenido principal del sitio web -->
     <main>
 
-        <!-- Sección: Inicio -->
         <section id="inicio">
             <h2>Bienvenidos a la experiencia Coca-Cola</h2>
             <p>Descubre la historia, el sabor inconfundible y el compromiso global de una de las marcas más icónicas del
@@ -38,7 +272,6 @@
 
         <hr>
 
-        <!-- Sección: Quiénes Somos (Con más de 100 palabras, etiquetas requeridas e imagen) -->
         <section id="quienes-somos">
             <h2>Quiénes Somos</h2>
             <article>
@@ -58,7 +291,6 @@
                     evolución que abarca opciones bajas en calorías y sin azúcar, seguimos construyendo un camino de
                     innovación culinaria y de distribución responsable, llevando frescura a cada rincón del planeta.
                 </p>
-                <!-- Imagen relacionada con el proyecto -->
                 <img src="./Assets/img/imagen_promocion/cocacola.jpg" alt="Botella clásica de Coca-Cola helada"
                     width="400">
             </article>
@@ -66,7 +298,6 @@
 
         <hr>
 
-        <!-- Sección: Servicios o Productos (Utilizando listas ul y li) -->
         <section id="servicios-productos">
             <h2>Nuestros Servicios y Productos</h2>
             <ul>
@@ -77,11 +308,10 @@
                 <li><strong>Merchandising y Publicidad:</strong> Campañas icónicas y distribución de material POP
                     exclusivo para aliados comerciales estratégicos.</li>
                 <li><strong>Programas de Sostenibilidad:</strong> Asesoría y equipamiento para puntos de venta en la
-                    recolección masiva de botellas PET reciclables.</li>
+                    reclusión masiva de botellas PET reciclables.</li>
             </ul>
 
             <br>
-            <!-- Inclusión de un video relacionado mediante iframe -->
             <h3>Conoce más sobre nuestra historia y propósito</h3>
             <iframe width="560" height="315" src="https://www.youtube.com/embed/oaYdL2n7O0E?si=1Oo4X4UrXnS4zRzG"
                 title="YouTube video player" frameborder="0"
@@ -91,7 +321,6 @@
 
         <hr>
 
-        <!-- Sección: Contacto (Con correo, teléfono, dirección y enlaces a redes sociales) -->
         <section id="contacto">
             <h2>Contacto</h2>
             <p><strong>Dirección:</strong> Av. Amazonas y Mariana de Jesús, Quito, Ecuador</p>
@@ -109,7 +338,6 @@
 
     </main>
 
-    <!-- Barra lateral con información complementaria (aside) -->
     <aside>
         <h3>Promociones y Horarios</h3>
         <p><strong>¡Promoción de la Semana!:</strong> Registra los códigos de tus tapas doradas en nuestra aplicación
@@ -117,7 +345,6 @@
         <p><strong>Horario de atención al cliente:</strong> Lunes a Viernes de 08:00 a 17:00.</p>
     </aside>
 
-    <!-- Pie de página manteniendo los datos específicos del estudiante -->
     <footer>
         <p>© 2026 - Ronald Gabriel Pullotasig Barrera | Asignatura: Desarrollo Web / Tecnologías de la Información |
             Universidad Estatal Amazónica</p>
