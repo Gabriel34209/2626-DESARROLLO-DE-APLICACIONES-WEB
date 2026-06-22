@@ -5,351 +5,350 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coca-Cola - Destapa la Felicidad</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
     <style>
-        /* Estilos Generales y Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* ==========================================================================
+           ESTILOS PERSONALIZADOS CSS3
+           ========================================================================== */
+        :root {
+            --rojo-cocacola: #e31837;
+            --negro-profundo: #111111;
+            --gris-fondo: #f4f4f6;
+            --blanco: #ffffff;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f7f7f7;
+            background-color: var(--gris-fondo);
             color: #333333;
-            line-height: 1.6;
-            padding-bottom: 40px;
         }
 
-        /* Encabezado (Header) */
+        /* Encabezado */
         header {
-            background-color: #e31837; /* Rojo Coca-Cola */
-            color: #ffffff;
-            text-align: center;
-            padding: 45px 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            background-color: var(--rojo-cocacola);
+            color: var(--blanco);
+            padding: 60px 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
         }
 
         header h1 {
-            font-size: 3.5rem;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            font-size: 3.8rem;
             font-weight: 800;
+            letter-spacing: 3px;
+            text-transform: uppercase;
         }
 
         header p {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             font-style: italic;
-            color: #ffffff; /* Color blanco de alta visibilidad */
-            text-align: center; /* Centrado absoluto de la frase */
-            font-weight: 600; /* Mayor grosor de letra */
-            margin-top: 10px;
-            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4); /* Sombra de contraste para legibilidad */
+            font-weight: 500;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
         }
 
-        /* Menú de Navegación (Nav) */
-        nav {
-            background-color: #111111;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        /* Menú de Navegación */
+        .navbar {
+            background-color: var(--negro-profundo);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
 
-        nav ul {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        nav ul li {
-            margin: 0 15px;
-        }
-
-        nav ul li a {
-            display: block;
-            color: #ffffff;
-            text-decoration: none;
-            padding: 15px 20px;
+        .navbar-brand, .nav-link {
+            color: var(--blanco) !important;
             font-weight: 600;
             transition: all 0.3s ease;
         }
 
-        nav ul li a:hover {
-            background-color: #e31837;
-            color: #ffffff;
+        .nav-link:hover {
+            background-color: var(--rojo-cocacola);
+            border-radius: 4px;
+            color: var(--blanco) !important;
         }
 
-        /* Contenedor Principal (Main) y Secciones */
-        main {
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
+        /* Secciones */
         section {
-            background-color: #ffffff;
-            padding: 40px;
-            margin-bottom: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            text-align: center;
+            background-color: var(--blanco);
+            padding: 50px 30px;
+            margin-bottom: 40px;
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
         }
 
-        /* Títulos de las Secciones */
         h2 {
-            color: #e31837;
-            font-size: 2rem;
-            margin-bottom: 20px;
+            color: var(--rojo-cocacola);
+            font-weight: 700;
             position: relative;
-            padding-bottom: 10px;
-            display: inline-block;
+            padding-bottom: 12px;
+            margin-bottom: 30px;
         }
 
         h2::after {
             content: '';
-            width: 60px;
-            height: 3px;
-            background-color: #111111;
+            width: 70px;
+            height: 4px;
+            background-color: var(--negro-profundo);
             position: absolute;
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
         }
 
-        h3 {
-            color: #111111;
-            margin: 25px 0 15px 0;
-            font-size: 1.3rem;
-        }
-
-        p {
-            margin-bottom: 15px;
-            color: #555555;
-            font-size: 1.05rem;
+        .text-justify {
             text-align: justify;
         }
 
-        #inicio p {
-            text-align: center;
-            font-size: 1.15rem;
-            max-width: 750px;
-            margin: 0 auto;
+        /* 💥 EFECTO SOLICITADO: ZOOM INTERACTIVO EN LA IMAGEN 💥 */
+        .img-zoom-interactive {
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease;
+            cursor: pointer;
         }
 
-        hr {
+        /* Al colocar el cursor encima (Hover) */
+        .img-zoom-interactive:hover {
+            transform: scale(1.08); /* Se hace un 8% más grande */
+            box-shadow: 0 15px 35px rgba(227, 24, 55, 0.3) !important; /* Sombra rojiza profunda */
+        }
+
+        /* Tarjetas de Productos */
+        .card {
             border: none;
-            margin: 10px 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        /* Imágenes */
-        img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin-top: 20px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
         }
 
-        /* Listas (ul / li de Productos) */
-        #servicios-productos ul {
-            list-style: none;
-            max-width: 700px;
-            margin: 0 auto 25px auto;
-            text-align: left;
+        /* Animación de enfoque en inputs del formulario */
+        .form-control:focus {
+            border-color: var(--rojo-cocacola);
+            box-shadow: 0 0 0 0.25px rgba(227, 24, 55, 0.25);
         }
 
-        #servicios-productos ul li {
-            background-color: #f9f9f9;
-            margin-bottom: 10px;
-            padding: 15px;
-            border-left: 4px solid #e31837;
-            border-radius: 0 8px 8px 0;
-        }
-
-        /* Videos (Iframe) */
-        iframe {
-            max-width: 100%;
-            border: none;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            margin-top: 15px;
-        }
-
-        /* Enlaces de contacto y redes */
-        a {
-            color: #e31837;
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.2s ease;
-        }
-
-        a:hover {
-            color: #111111;
-            text-decoration: underline;
-        }
-
-        #contacto p {
-            text-align: center;
-            margin-bottom: 8px;
-        }
-
-        /* Barra Lateral (Aside) */
+        /* Barra Lateral */
         aside {
-            max-width: 900px;
-            margin: 0 auto 40px auto;
-            background-color: #111111;
-            color: #ffffff;
-            padding: 30px;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            background-color: var(--negro-profundo);
+            color: var(--blanco);
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
         }
 
-        aside h3 {
-            color: #e31837;
-            margin-top: 0;
-            font-size: 1.5rem;
-        }
-
-        aside p {
-            color: #dddddd;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        aside strong {
-            color: #ffffff;
-        }
-
-        /* Pie de Página (Footer) */
+        /* Pie de Página */
         footer {
-            background-color: #111111;
-            color: #aaaaaa;
-            text-align: center;
-            padding: 25px 20px;
-            font-size: 0.9rem;
-            border-top: 3px solid #e31837;
+            background-color: var(--negro-profundo);
+            color: #bbbbbb;
+            border-top: 4px solid var(--rojo-cocacola);
         }
 
-        footer p {
-            color: #aaaaaa;
-            text-align: center;
-            margin: 0;
+        /* Media Query para pantallas pequeñas */
+        @media (max-width: 576px) {
+            header h1 {
+                font-size: 2.5rem;
+            }
+            header p {
+                font-size: 1.1rem;
+            }
+            section {
+                padding: 30px 15px;
+            }
+            iframe {
+                height: 200px;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <header>
-        <h1>Coca-Cola</h1>
-        <p>Refrescando al mundo y haciendo la diferencia a través de nuestras bebidas</p>
+    <header class="text-center">
+        <div class="container">
+            <h1 class="display-3 m-0">Coca-Cola</h1>
+            <p class="lead mt-3">Refrescando al mundo y haciendo la diferencia a través de nuestras bebidas</p>
+        </div>
     </header>
 
-    <nav>
-        <ul>
-            <li><a href="#inicio">Inicio</a></li>
-            <li><a href="#quienes-somos">Quiénes Somos</a></li>
-            <li><a href="#servicios-productos">Servicios o Productos</a></li>
-            <li><a href="#contacto">Contacto</a></li>
-        </ul>
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-lg-none" href="#">Menú</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav gap-2">
+                    <li class="nav-item"><a class="nav-link px-3" href="#inicio">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="#quienes-somos">Quiénes Somos</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="#servicios-productos">Servicios o Productos</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="#contacto">Contacto</a></li>
+                </ul>
+            </div>
+        </div>
     </nav>
 
-    <main>
+    <main class="container my-5">
 
-        <section id="inicio">
-            <h2>Bienvenidos a la experiencia Coca-Cola</h2>
-            <p>Descubre la historia, el sabor inconfundible y el compromiso global de una de las marcas más icónicas del
-                planeta. Desde hace más de un siglo, estamos presentes en tus mejores momentos, uniendo a las personas y
-                celebrando la magia de estar juntos.</p>
+        <section id="inicio" class="text-center py-5">
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <h2>Bienvenidos a la experiencia Coca-Cola</h2>
+                    <p class="fs-5 text-muted text-center mt-4">
+                        Descubre la historia, el sabor inconfundible y el compromiso global de una de las marcas más icónicas del
+                        planeta. Desde hace más de un siglo, estamos presentes en tus mejores momentos, uniendo a las personas y
+                        celebrando la magia de estar juntos.
+                    </p>
+                    <a href="#servicios-productos" class="btn btn-danger btn-lg mt-4 px-4 shadow-sm fw-bold">Explorar Productos</a>
+                </div>
+            </div>
         </section>
 
-        <hr>
-
-        <section id="quienes-somos">
+        <section id="quienes-somos" class="text-center">
             <h2>Quiénes Somos</h2>
-            <article>
-                <p>
-                    The Coca-Cola Company es una corporación multinacional de bebidas que ha liderado la industria
-                    global de refrescos desde su fundación en 1886. Nuestro propósito fundamental es refrescar al mundo
-                    en mente, cuerpo y espíritu, inspirando momentos de optimismo y felicidad a través de nuestras
-                    marcas y acciones. Nos hemos consolidado no solo como un referente comercial, sino como un símbolo
-                    cultural que trasciende fronteras, adaptándonos continuamente a los gustos y necesidades de millones
-                    de consumidores en más de doscientos países alrededor del globo terráqueo.
-                </p>
-                <p>
-                    Nos enfocamos firmemente en el desarrollo de un negocio sostenible y transparente. Trabajamos
-                    activamente en iniciativas orientadas a reducir el impacto ambiental, promoviendo el reciclaje de
-                    envases con nuestra visión de un "Mundo sin Residuos", optimizando el uso eficiente del agua y
-                    fomentando el bienestar en las comunidades locales donde operamos. Con un portafolio en constante
-                    evolución que abarca opciones bajas en calorías y sin azúcar, seguimos construyendo un camino de
-                    innovación culinaria y de distribución responsable, llevando frescura a cada rincón del planeta.
-                </p>
-                <img src="./Assets/img/imagen_promocion/cocacola.jpg" alt="Botella clásica de Coca-Cola helada"
-                    width="400">
+            <article class="row align-items-center mt-4 text-start">
+                <div class="col-md-7">
+                    <p class="text-secondary lh-lg text-justify">
+                        The Coca-Cola Company es una corporación multinacional de bebidas que ha liderado la industria
+                        global de refrescos desde su fundación en 1886. Nuestro propósito fundamental es refrescar al mundo
+                        en mente, cuerpo y espíritu, inspirando momentos de optimismo y felicidad a través de nuestras
+                        marcas y acciones. Nos hemos consolidado no solo como un referente comercial, sino como un símbolo
+                        cultural que trasciende fronteras, adaptándonos continuamente a los gustos y necesidades de millones
+                        de consumidores en más de doscientos países alrededor del globo terráqueo.
+                    </p>
+                    <p class="text-secondary lh-lg text-justify">
+                        Nos enfocamos firmemente en el desarrollo de un negocio sostenible y transparente. Trabajamos
+                        activamente en iniciativas orientadas a reducir el impacto ambiental, promoviendo el reciclaje de
+                        envases con nuestra visión de un "Mundo sin Residuos", optimizando el uso eficiente del agua y
+                        fomentando el bienestar en las comunidades locales donde operamos.
+                    </p>
+                </div>
+                <div class="col-md-5 text-center mt-4 mt-md-0 overflow-visible">
+                    <img src="./Assets/img/imagen_promocion/cocacola.jpg" alt="Botella clásica de Coca-Cola helada"
+                        class="img-fluid rounded shadow-lg m-auto img-zoom-interactive" style="max-height: 350px; object-fit: cover;">
+                </div>
             </article>
         </section>
 
-        <hr>
-
-        <section id="servicios-productos">
+        <section id="servicios-productos" class="text-center">
             <h2>Nuestros Servicios y Productos</h2>
-            <ul>
-                <li><strong>Portafolio de Bebidas:</strong> Variedad de opciones que incluyen Coca-Cola Original,
-                    Coca-Cola Sin Azúcar y Coca-Cola Sabor Ligero.</li>
-                <li><strong>Distribución Comercial:</strong> Suministro continuo a tiendas de barrio, restaurantes,
-                    supermercados y cadenas de entretenimiento a nivel nacional.</li>
-                <li><strong>Merchandising y Publicidad:</strong> Campañas icónicas y distribución de material POP
-                    exclusivo para aliados comerciales estratégicos.</li>
-                <li><strong>Programas de Sostenibilidad:</strong> Asesoría y equipamiento para puntos de venta en la
-                    reclusión masiva de botellas PET reciclables.</li>
-            </ul>
+            
+            <div class="row g-4 mt-2 text-start">
+                <div class="col-md-6 col-lg-3">
+                    <div class="card h-100 p-2">
+                        <div class="card-body">
+                            <h5 class="card-title text-danger fw-bold">Portafolio de Bebidas</h5>
+                            <p class="card-text text-muted small">Variedad de opciones que incluyen Coca-Cola Original, Coca-Cola Sin Azúcar y Coca-Cola Sabor Ligero.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card h-100 p-2">
+                        <div class="card-body">
+                            <h5 class="card-title text-danger fw-bold">Distribución Comercial</h5>
+                            <p class="card-text text-muted small">Suministro continuo a tiendas de barrio, restaurantes, supermercados y cadenas de entretenimiento.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card h-100 p-2">
+                        <div class="card-body">
+                            <h5 class="card-title text-danger fw-bold">Merchandising</h5>
+                            <p class="card-text text-muted small">Campañas icónicas y distribución de material POP exclusivo para aliados comerciales estratégicos.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card h-100 p-2">
+                        <div class="card-body">
+                            <h5 class="card-title text-danger fw-bold">Sostenibilidad</h5>
+                            <p class="card-text text-muted small">Asesoría y equipamiento para puntos de venta en la recolección masiva de botellas PET reciclables.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-            <br>
-            <h3>Conoce más sobre nuestra historia y propósito</h3>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/oaYdL2n7O0E?si=1Oo4X4UrXnS4zRzG"
-                title="YouTube video player" frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <div class="row justify-content-center mt-5">
+                <div class="col-lg-8">
+                    <h3 class="mb-4 fw-semibold">Conoce más sobre nuestra historia y propósito</h3>
+                    <div class="ratio ratio-16x9 shadow rounded overflow-hidden">
+                        <iframe src="https://www.youtube.com/embed/oaYdL2n7O0E?si=1Oo4X4UrXnS4zRzG"
+                            title="YouTube video player" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
         </section>
 
-        <hr>
-
-        <section id="contacto">
+        <section id="contacto" class="text-center">
             <h2>Contacto</h2>
-            <p><strong>Dirección:</strong> Av. Amazonas y Mariana de Jesús, Quito, Ecuador</p>
-            <p><strong>Teléfono de Atención al Cliente:</strong> <a href="tel:+593999999999">+593 99 999 9999</a></p>
-            <p><strong>Correo Electrónico Corporativo:</strong> <a href="mailto:info@cocacola.com">info@cocacola.com</a>
-            </p>
+            
+            <div class="row g-5 mt-2 text-start">
+                <div class="col-md-5 d-flex flex-column justify-content-center">
+                    <p class="mb-3"><strong>Dirección:</strong><br><span class="text-muted">Av. Amazonas y Mariana de Jesús, Quito, Ecuador</span></p>
+                    <p class="mb-3"><strong>Teléfono:</strong><br><a href="tel:+593999999999" class="text-danger text-decoration-none fw-bold">+593 99 999 9999</a></p>
+                    <p class="mb-4"><strong>Correo Electrónico:</strong><br><a href="mailto:info@cocacola.com" class="text-danger text-decoration-none fw-bold">info@cocacola.com</a></p>
 
-            <h3>Síguenos en nuestras Redes Oficiales</h3>
-            <p>
-                <a href="https://www.facebook.com" target="_blank">Facebook</a> |
-                <a href="https://www.instagram.com" target="_blank">Instagram</a> |
-                <a href="https://www.tiktok.com" target="_blank">TikTok</a>
-            </p>
+                    <h5 class="fw-bold mb-3">Síguenos en nuestras Redes</h5>
+                    <div class="d-flex gap-2">
+                        <a href="https://www.facebook.com" target="_blank" class="btn btn-outline-primary btn-sm px-3 fw-semibold">Facebook</a>
+                        <a href="https://www.instagram.com" target="_blank" class="btn btn-outline-danger btn-sm px-3 fw-semibold">Instagram</a>
+                        <a href="https://www.tiktok.com" target="_blank" class="btn btn-outline-dark btn-sm px-3 fw-semibold">TikTok</a>
+                    </div>
+                </div>
+
+                <div class="col-md-7">
+                    <div class="p-4 bg-light rounded-3 shadow-sm">
+                        <h4 class="mb-4 text-center fw-bold text-secondary">Envíanos un mensaje</h4>
+                        <form>
+                            <div class="mb-3">
+                                <label for="nombre" class="form-label fw-semibold">Nombre</label>
+                                <input type="text" class="form-control" id="nombre" placeholder="Tu nombre completo" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label fw-semibold">Correo Electrónico</label>
+                                <input type="email" class="form-control" id="email" placeholder="nombre@correo.com" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="asunto" class="form-label fw-semibold">Asunto</label>
+                                <input type="text" class="form-control" id="asunto" placeholder="Motivo de tu consulta" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="mensaje" class="form-label fw-semibold">Mensaje</label>
+                                <textarea class="form-control" id="mensaje" rows="4" placeholder="Escribe aquí tu mensaje..." required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-danger w-100 py-2 shadow-sm fw-bold">Enviar Mensaje</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </section>
+
+        <aside class="p-5 my-5 text-center text-sm-start">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h3 class="text-danger fw-bold mb-3">Promociones y Horarios</h3>
+                    <p class="m-0 text-light opacity-75">
+                        <strong>¡Promoción de la Semana!:</strong> Registra los códigos de tus tapas doradas en nuestra aplicación móvil y participa por espectaculares premios instantáneos.
+                    </p>
+                </div>
+                <div class="col-md-4 text-md-end mt-4 mt-md-0">
+                    <span class="badge bg-danger p-3 fs-6 d-block shadow-sm">
+                        Horario de atención:<br>Lun a Vie de 08:00 a 17:00
+                    </span>
+                </div>
+            </div>
+        </aside>
 
     </main>
 
-    <aside>
-        <h3>Promociones y Horarios</h3>
-        <p><strong>¡Promoción de la Semana!:</strong> Registra los códigos de tus tapas doradas en nuestra aplicación
-            móvil y participa por espectaculares premios instantáneos.</p>
-        <p><strong>Horario de atención al cliente:</strong> Lunes a Viernes de 08:00 a 17:00.</p>
-    </aside>
-
-    <footer>
-        <p>© 2026 - Ronald Gabriel Pullotasig Barrera | Asignatura: Desarrollo Web / Tecnologías de la Información |
-            Universidad Estatal Amazónica</p>
+    <footer class="text-center py-4 px-3 mt-auto">
+        <div class="container">
+            <p class="m-0 text-muted small">
+                © 2026 - Ronald Gabriel Pullotasig Barrera | Asignatura: Desarrollo Web / Tecnologías de la Información | 
+                <span class="text-white-50">Universidad Estatal Amazónica</span>
+            </p>
+        </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
