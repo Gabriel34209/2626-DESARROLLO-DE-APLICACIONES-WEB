@@ -121,9 +121,9 @@
         }
 
         /* Animación de enfoque en inputs del formulario */
-        .form-control:focus {
+        .form-control:focus, .form-select:focus {
             border-color: var(--rojo-cocacola);
-            box-shadow: 0 0 0 0.25px rgba(227, 24, 55, 0.25);
+            box-shadow: 0 0 0 0.25rem rgba(227, 24, 55, 0.25);
         }
 
         /* Barra Lateral */
@@ -277,45 +277,74 @@
             </div>
         </section>
 
+        <!-- ==========================================================================
+           SECCIÓN CONTACTO ACTUALIZADA CON ELEMENTOS DINÁMICOS PARA JAVASCRIPT
+           ========================================================================== -->
         <section id="contacto" class="text-center">
-            <h2>Contacto</h2>
+            <h2>Contacto y Buzón de Sugerencias</h2>
             
             <div class="row g-5 mt-2 text-start">
-                <div class="col-md-5 d-flex flex-column justify-content-center">
-                    <p class="mb-3"><strong>Dirección:</strong><br><span class="text-muted">Av. Amazonas y Mariana de Jesús, Quito, Ecuador</span></p>
-                    <p class="mb-3"><strong>Teléfono:</strong><br><a href="tel:+593999999999" class="text-danger text-decoration-none fw-bold">+593 99 999 9999</a></p>
-                    <p class="mb-4"><strong>Correo Electrónico:</strong><br><a href="mailto:info@cocacola.com" class="text-danger text-decoration-none fw-bold">info@cocacola.com</a></p>
+                <!-- Información de contacto y Redes Sociales -->
+                <div class="col-md-4 d-flex flex-column justify-content-start">
+                    <div class="mb-4">
+                        <p class="mb-3"><strong>Dirección:</strong><br><span class="text-muted">Av. Amazonas y Mariana de Jesús, Quito, Ecuador</span></p>
+                        <p class="mb-3"><strong>Teléfono:</strong><br><a href="tel:+593999999999" class="text-danger text-decoration-none fw-bold">+593 99 999 9999</a></p>
+                        <p class="mb-4"><strong>Correo Electrónico:</strong><br><a href="mailto:info@cocacola.com" class="text-danger text-decoration-none fw-bold">info@cocacola.com</a></p>
+                    </div>
 
                     <h5 class="fw-bold mb-3">Síguenos en nuestras Redes</h5>
-                    <div class="d-flex gap-2">
+                    <div class="d-flex gap-2 mb-4">
                         <a href="https://www.facebook.com" target="_blank" class="btn btn-outline-primary btn-sm px-3 fw-semibold">Facebook</a>
                         <a href="https://www.instagram.com" target="_blank" class="btn btn-outline-danger btn-sm px-3 fw-semibold">Instagram</a>
                         <a href="https://www.tiktok.com" target="_blank" class="btn btn-outline-dark btn-sm px-3 fw-semibold">TikTok</a>
                     </div>
                 </div>
 
-                <div class="col-md-7">
+                <!-- Formulario Interactivo -->
+                <div class="col-md-4">
                     <div class="p-4 bg-light rounded-3 shadow-sm">
-                        <h4 class="mb-4 text-center fw-bold text-secondary">Envíanos un mensaje</h4>
-                        <form>
+                        <h4 class="mb-4 text-center fw-bold text-secondary">Registrar Solicitud</h4>
+                        
+                        <!-- Contenedor dinámico para alertas/mensajes de error de JavaScript -->
+                        <div id="mensaje-alerta"></div>
+
+                        <form id="formulario-sugerencias">
                             <div class="mb-3">
-                                <label for="nombre" class="form-label fw-semibold">Nombre</label>
-                                <input type="text" class="form-control" id="nombre" placeholder="Tu nombre completo" required>
+                                <label for="nombre-item" class="form-label fw-semibold">Nombre del Producto o Solicitante</label>
+                                <input type="text" class="form-control" id="nombre-item" placeholder="Tu nombre o producto sugerido">
                             </div>
                             <div class="mb-3">
-                                <label for="email" class="form-label fw-semibold">Correo Electrónico</label>
-                                <input type="email" class="form-control" id="email" placeholder="nombre@correo.com" required>
+                                <label for="categoria-item" class="form-label fw-semibold">Categoría / Tipo</label>
+                                <select class="form-select" id="categoria-item">
+                                    <option value="">Selecciona una opción</option>
+                                    <option value="Bebida Nueva">Sugerencia de Bebida</option>
+                                    <option value="Distribución">Reporte de Distribución</option>
+                                    <option value="Sostenibilidad">Idea de Sostenibilidad</option>
+                                    <option value="Otro">Otro Asunto</option>
+                                </select>
                             </div>
                             <div class="mb-3">
-                                <label for="asunto" class="form-label fw-semibold">Asunto</label>
-                                <input type="text" class="form-control" id="asunto" placeholder="Motivo de tu consulta" required>
+                                <label for="descripcion-item" class="form-label fw-semibold">Descripción / Mensaje</label>
+                                <textarea class="form-control" id="descripcion-item" rows="4" placeholder="Escribe detalladamente tu mensaje aquí..."></textarea>
                             </div>
-                            <div class="mb-3">
-                                <label for="mensaje" class="form-label fw-semibold">Mensaje</label>
-                                <textarea class="form-control" id="mensaje" rows="4" placeholder="Escribe aquí tu mensaje..." required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-danger w-100 py-2 shadow-sm fw-bold">Enviar Mensaje</button>
+                            <button type="submit" class="btn btn-danger w-100 py-2 shadow-sm fw-bold">Enviar y Registrar</button>
                         </form>
+                    </div>
+                </div>
+
+                <!-- Panel de Visualización Dinámica de Registros en Pantalla -->
+                <div class="col-md-4">
+                    <div class="p-4 bg-white border rounded-3 shadow-sm h-100">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h4 class="fw-bold text-secondary m-0">Registros Recibidos</h4>
+                            <!-- Contador Dinámico controlado por JS -->
+                            <span class="badge bg-dark p-2 fs-6">Total: <span id="contador-total">0</span></span>
+                        </div>
+                        
+                        <!-- Contenedor donde JS inyectará las tarjetas nuevas -->
+                        <div id="contenedor-registros" class="row g-3">
+                            <!-- Los elementos creados dinámicamente aparecerán aquí -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -348,7 +377,11 @@
         </div>
     </footer>
 
+    <!-- Bootstrap Bundle script -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Enlace obligatorio al archivo interactivo de JavaScript externo -->
+    <script src="script.js"></script>
 </body>
 
 </html>
