@@ -1,115 +1,166 @@
 // ==========================================================================
-// FUNCIONALIDAD DINÁMICA CON JAVASCRIPT - PROYECTO COCA-COLA
+// VALIDACIONES EN TIEMPO REAL Y LOGICA MODULAR - PROYECTO COCA-COLA
 // ==========================================================================
 
-// 1. Esperar a que el DOM esté completamente cargado
 document.addEventListener("DOMContentLoaded", () => {
-    
-    // VARIABLES Y SELECTORES
+    // Selectores principales
     const formulario = document.getElementById("formulario-sugerencias");
+    const inputNombre = document.getElementById("nombre-item");
+    const selectCategoria = document.getElementById("categoria-item");
+    const txtDescripcion = document.getElementById("descripcion-item");
+    
     const contenedorRegistros = document.getElementById("contenedor-registros");
     const contadorTotal = document.getElementById("contador-total");
     const mensajeAlerta = document.getElementById("mensaje-alerta");
-    
+
     let totalElementos = 0;
 
-    // 2. CAPTURAR EL EVENTO SUBMIT DEL FORMULARIO
-    formulario.addEventListener("submit", (evento) => {
-        // Evitar que la página se recargue por defecto
-        evento.preventDefault();
+    // --- FUNCIONES DE VALIDACIÓN REUTILIZABLES ---
 
-        // Obtener los valores de los inputs
-        const nombre = document.getElementById("nombre-item").value.trim();
-        const categoria = document.getElementById("categoria-item").value;
-        const descripcion = document.getElementById("descripcion-item").value.trim();
-
-        // 3. VALIDACIÓN DE CAMPOS VACÍOS
-        if (nombre === "" || categoria === "" || descripcion === "") {
-            mostrarAlerta("¡Por favor, completa todos los campos del formulario!", "danger");
-            return; // Detiene la ejecución si hay campos vacíos
+    function validarNombre() {
+        const valor = inputNombre.value.trim();
+        if (valor === "" || valor.length < 3) {
+            marcarInvalido(inputNombre);
+            return false;
+        } else {
+            marcarValido(inputNombre);
+            return true;
         }
+    }
 
-        // Si pasa la validación, mostrar mensaje de éxito
-        mostrarAlerta("¡Registro agregado correctamente!", "success");
+    function validarCategoria() {
+        const valor = selectCategoria.value;
+        if (valor === "") {
+            marcarInvalido(selectCategoria);
+            return false;
+        } else {
+            marcarValido(selectCategoria);
+            return true;
+        }
+    }
 
-        // 4. CREACIÓN DINÁMICA DE ELEMENTOS HTML (createElement)
-        // Crear columna contenedora de Bootstrap
+    function validarDescripcion() {
+        const valor = txtDescripcion.value.trim();
+        if (valor === "" || valor.length < 10) {
+            marcarInvalido(txtDescripcion);
+            return false;
+        } else {
+            marcarValido(txtDescripcion);
+            return true;
+        }
+    }
+
+    // Funciones auxiliares para aplicar clases Bootstrap
+    function marcarInvalido(elemento) {
+        elemento.classList.remove("is-valid");
+        elemento.classList.add("is-invalid");
+    }
+
+    function marcarValido(elemento) {
+        elemento.classList.remove("is-invalid");
+        elemento.classList.add("is-valid");
+    }
+
+    function limpiarEstilosValidacion() {
+        [inputNombre, selectCategoria, txtDescripcion].forEach(elemento => {
+            elemento.classList.remove("is-valid", "is-invalid");
+        });
+    }
+
+    // --- ASIGNACIÓN DE EVENTOS EN TIEMPO REAL (input y blur) ---
+
+    inputNombre.addEventListener("input", validarNombre);
+    inputNombre.addEventListener("blur", validarNombre);
+
+    selectCategoria.addEventListener("change", validarCategoria);
+    selectCategoria.addEventListener("blur", validarCategoria);
+
+    txtDescripcion.addEventListener("input", validarDescripcion);
+    txtDescripcion.addEventListener("blur", validarDescripcion);
+
+
+    // --- MANEJO DEL EVENTO SUBMIT ---
+
+    formulario.addEventListener("submit", (evento) => {
+        evento.preventDefault(); // Evita la recarga de la página
+
+        // Ejecutar todas las validaciones antes de registrar
+        const esNombreValido = validarNombre();
+        const esCategoriaValida = validarCategoria();
+        const esDescripcionValida = validarDescripcion();
+
+        // Permitir registro ÚNICAMENTE si todas las validaciones son correctas
+        if (esNombreValido && esCategoriaValida && esDescripcionValida) {
+            agregarRegistro(inputNombre.value.trim(), selectCategoria.value, txtDescripcion.value.trim());
+            mostrarMensajeGlobal("¡Registro completado y guardado con éxito!", "alert-success");
+            formulario.reset();
+            limpiarEstilosValidacion();
+        } else {
+            mostrarMensajeGlobal("Por favor, corrige los errores en los campos resaltados.", "alert-danger");
+        }
+    });
+
+    // --- CREACIÓN Y GESTIÓN DE REGISTROS DINÁMICOS ---
+
+    function agregarRegistro(nombre, categoria, descripcion) {
+        // Crear elementos dinámicos mediante createElement()
         const columna = document.createElement("div");
         columna.className = "col-12 animate__animated animate__fadeIn";
 
-        // Crear la tarjeta (Card)
         const tarjeta = document.createElement("div");
         tarjeta.className = "card p-3 border-start border-danger border-4 shadow-sm";
 
-        // Cuerpo de la tarjeta
-        const tarjetaContenido = document.createElement("div");
-        tarjetaContenido.className = "card-body p-1";
+        const cuerpoTarjeta = document.createElement("div");
+        cuerpoTarjeta.className = "card-body p-1";
 
-        // Título (Nombre)
-        const tituloCard = document.createElement("h5");
-        tituloCard.className = "card-title text-danger fw-bold mb-1";
-        tituloCard.textContent = nombre;
+        const titulo = document.createElement("h5");
+        titulo.className = "card-title text-danger fw-bold mb-1";
+        titulo.textContent = nombre;
 
-        // Subtítulo (Categoría)
-        const subtituloCard = document.createElement("span");
-        subtituloCard.className = "badge bg-secondary mb-2";
-        subtituloCard.textContent = categoria;
+        // CORRECCIÓN AQUÍ: Se usa guion bajo (_) para evitar errores de sintaxis en JS
+        const sub_etiqueta = document.createElement("span");
+        sub_etiqueta.className = "badge bg-secondary mb-2";
+        sub_etiqueta.textContent = categoria;
 
-        // Texto (Descripción)
-        const textoCard = document.createElement("p");
-        textoCard.className = "card-text text-muted small text-justify mb-3";
-        textoCard.textContent = descripcion;
+        const detalle = document.createElement("p");
+        detalle.className = "card-text text-muted small text-justify mb-3";
+        detalle.textContent = descripcion;
 
-        // Botón de eliminar con evento de clic integrado
         const botonEliminar = document.createElement("button");
         botonEliminar.className = "btn btn-outline-dark btn-sm fw-bold";
-        botonEliminar.textContent = "Eliminar Registro";
+        botonEliminar.textContent = "Eliminar";
 
-        // 5. EVENTO CLICK PARA ELIMINAR EL REGISTRO
+        // Evento click independiente para eliminar registros
         botonEliminar.addEventListener("click", () => {
-            columna.remove(); // Remueve el elemento de la pantalla
-            actualizarContador(-1); // Decrementa el contador global
+            columna.remove();
+            actualizarContador(-1);
         });
 
-        // 6. ENSAMBLAR E INYECTAR ELEMENTOS EN LA PÁGINA (appendChild)
-        tarjetaContenido.appendChild(tituloCard);
-        tarjetaContenido.appendChild(subtituloCard);
-        tarjetaContenido.appendChild(textoCard);
-        tarjetaContenido.appendChild(botonEliminar);
-        
-        tarjeta.appendChild(tarjetaContenido);
+        // Ensamblar la estructura utilizando appendChild()
+        cuerpoTarjeta.appendChild(titulo);
+        cuerpoTarjeta.appendChild(sub_etiqueta); // CORRECCIÓN AQUÍ
+        cuerpoTarjeta.appendChild(detalle);
+        cuerpoTarjeta.appendChild(botonEliminar);
+        tarjeta.appendChild(cuerpoTarjeta);
         columna.appendChild(tarjeta);
-        
+
         contenedorRegistros.appendChild(columna);
-
-        // 7. ACTUALIZAR EL CONTADOR TOTAL
         actualizarContador(1);
+    }
 
-        // Limpiar el formulario para un nuevo ingreso
-        formulario.reset();
-    });
-
-    // FUNCIÓN PARA ACTUALIZAR EL CONTADOR EN PANTALLA
     function actualizarContador(valor) {
         totalElementos += valor;
         contadorTotal.textContent = totalElementos;
     }
 
-    // FUNCIÓN PARA MOSTRAR MENSAJES DINÁMICOS DE VALIDACIÓN
-    function mostrarAlerta(mensaje, tipo) {
-        // Limpiar alertas previas
+    function mostrarMensajeGlobal(mensaje, claseBootstrap) {
         mensajeAlerta.innerHTML = "";
-
         const alerta = document.createElement("div");
-        alerta.className = `alert alert-${tipo} alert-dismissible fade show fw-semibold small py-2`;
+        alerta.className = `alert ${claseBootstrap} alert-dismissible fade show fw-semibold small py-2 text-center`;
         alerta.role = "alert";
         alerta.textContent = mensaje;
-
         mensajeAlerta.appendChild(alerta);
 
-        // Auto-eliminar la alerta después de 3.5 segundos
-        setTimeout(() => {
-            alerta.remove();
-        }, 3500);
+        setTimeout(() => alerta.remove(), 4000);
     }
 });

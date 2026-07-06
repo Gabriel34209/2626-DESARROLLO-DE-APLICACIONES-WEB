@@ -96,16 +96,15 @@
             text-align: justify;
         }
 
-        /* 💥 EFECTO SOLICITADO: ZOOM INTERACTIVO EN LA IMAGEN 💥 */
+        /* 💥 EFECTO ZOOM INTERACTIVO EN LA IMAGEN 💥 */
         .img-zoom-interactive {
             transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease;
             cursor: pointer;
         }
 
-        /* Al colocar el cursor encima (Hover) */
         .img-zoom-interactive:hover {
-            transform: scale(1.08); /* Se hace un 8% más grande */
-            box-shadow: 0 15px 35px rgba(227, 24, 55, 0.3) !important; /* Sombra rojiza profunda */
+            transform: scale(1.08);
+            box-shadow: 0 15px 35px rgba(227, 24, 55, 0.3) !important;
         }
 
         /* Tarjetas de Productos */
@@ -277,14 +276,11 @@
             </div>
         </section>
 
-        <!-- ==========================================================================
-           SECCIÓN CONTACTO ACTUALIZADA CON ELEMENTOS DINÁMICOS PARA JAVASCRIPT
-           ========================================================================== -->
+        <!-- SECCIÓN DE FORMULARIO CON VALIDACIONES MEJORADAS -->
         <section id="contacto" class="text-center">
             <h2>Contacto y Buzón de Sugerencias</h2>
             
             <div class="row g-5 mt-2 text-start">
-                <!-- Información de contacto y Redes Sociales -->
                 <div class="col-md-4 d-flex flex-column justify-content-start">
                     <div class="mb-4">
                         <p class="mb-3"><strong>Dirección:</strong><br><span class="text-muted">Av. Amazonas y Mariana de Jesús, Quito, Ecuador</span></p>
@@ -300,20 +296,22 @@
                     </div>
                 </div>
 
-                <!-- Formulario Interactivo -->
+                <!-- Formulario Interactivo con Contenedores de Feedback -->
                 <div class="col-md-4">
                     <div class="p-4 bg-light rounded-3 shadow-sm">
                         <h4 class="mb-4 text-center fw-bold text-secondary">Registrar Solicitud</h4>
                         
-                        <!-- Contenedor dinámico para alertas/mensajes de error de JavaScript -->
+                        <!-- Mensaje global de éxito o error general -->
                         <div id="mensaje-alerta"></div>
 
-                        <form id="formulario-sugerencias">
-                            <div class="mb-3">
+                        <form id="formulario-sugerencias" novalidate>
+                            <div class="mb-3 position-relative">
                                 <label for="nombre-item" class="form-label fw-semibold">Nombre del Producto o Solicitante</label>
-                                <input type="text" class="form-control" id="nombre-item" placeholder="Tu nombre o producto sugerido">
+                                <input type="text" class="form-control" id="nombre-item" placeholder="Mínimo 3 caracteres">
+                                <div class="invalid-feedback">El nombre es obligatorio y debe tener al menos 3 caracteres.</div>
+                                <div class="valid-feedback">¡Nombre correcto!</div>
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3 position-relative">
                                 <label for="categoria-item" class="form-label fw-semibold">Categoría / Tipo</label>
                                 <select class="form-select" id="categoria-item">
                                     <option value="">Selecciona una opción</option>
@@ -322,28 +320,30 @@
                                     <option value="Sostenibilidad">Idea de Sostenibilidad</option>
                                     <option value="Otro">Otro Asunto</option>
                                 </select>
+                                <div class="invalid-feedback">Debes seleccionar una categoría válida.</div>
+                                <div class="valid-feedback">¡Categoría seleccionada!</div>
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3 position-relative">
                                 <label for="descripcion-item" class="form-label fw-semibold">Descripción / Mensaje</label>
-                                <textarea class="form-control" id="descripcion-item" rows="4" placeholder="Escribe detalladamente tu mensaje aquí..."></textarea>
+                                <textarea class="form-control" id="descripcion-item" rows="4" placeholder="Mínimo 10 caracteres..."></textarea>
+                                <div class="invalid-feedback">La descripción debe contener suficiente información (mínimo 10 caracteres).</div>
+                                <div class="valid-feedback">¡Descripción suficiente!</div>
                             </div>
                             <button type="submit" class="btn btn-danger w-100 py-2 shadow-sm fw-bold">Enviar y Registrar</button>
                         </form>
                     </div>
                 </div>
 
-                <!-- Panel de Visualización Dinámica de Registros en Pantalla -->
+                <!-- Panel de Registros Recibidos -->
                 <div class="col-md-4">
                     <div class="p-4 bg-white border rounded-3 shadow-sm h-100">
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <h4 class="fw-bold text-secondary m-0">Registros Recibidos</h4>
-                            <!-- Contador Dinámico controlado por JS -->
                             <span class="badge bg-dark p-2 fs-6">Total: <span id="contador-total">0</span></span>
                         </div>
                         
-                        <!-- Contenedor donde JS inyectará las tarjetas nuevas -->
                         <div id="contenedor-registros" class="row g-3">
-                            <!-- Los elementos creados dinámicamente aparecerán aquí -->
+                            <!-- Inyección dinámica -->
                         </div>
                     </div>
                 </div>
@@ -377,10 +377,7 @@
         </div>
     </footer>
 
-    <!-- Bootstrap Bundle script -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- Enlace obligatorio al archivo interactivo de JavaScript externo -->
     <script src="script.js"></script>
 </body>
 
