@@ -13,6 +13,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const contadorTotal = document.getElementById("contador-total");
     const mensajeAlerta = document.getElementById("mensaje-alerta");
 
+    // Elementos del Spinner y Botón
+    const btnEnviar = document.getElementById("btn-enviar");
+    const spinnerCarga = document.getElementById("spinner-carga");
+    const textoBoton = document.getElementById("texto-boton");
+
+    // Instancia del Modal de Bootstrap
+    const modalConfirmacion = new bootstrap.Modal(document.getElementById('modalConfirmacion'));
+
     let totalElementos = 0;
 
     // --- FUNCIONES DE VALIDACIÓN REUTILIZABLES ---
@@ -50,7 +58,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Funciones auxiliares para aplicar clases Bootstrap
     function marcarInvalido(elemento) {
         elemento.classList.remove("is-valid");
         elemento.classList.add("is-invalid");
@@ -67,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // --- ASIGNACIÓN DE EVENTOS EN TIEMPO REAL (input y blur) ---
+    // --- ASIGNACIÓN DE EVENTOS EN TIEMPO REAL ---
 
     inputNombre.addEventListener("input", validarNombre);
     inputNombre.addEventListener("blur", validarNombre);
@@ -82,19 +89,47 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- MANEJO DEL EVENTO SUBMIT ---
 
     formulario.addEventListener("submit", (evento) => {
-        evento.preventDefault(); // Evita la recarga de la página
+        evento.preventDefault(); 
 
-        // Ejecutar todas las validaciones antes de registrar
         const esNombreValido = validarNombre();
         const esCategoriaValida = validarCategoria();
         const esDescripcionValida = validarDescripcion();
 
-        // Permitir registro ÚNICAMENTE si todas las validaciones son correctas
         if (esNombreValido && esCategoriaValida && esDescripcionValida) {
-            agregarRegistro(inputNombre.value.trim(), selectCategoria.value, txtDescripcion.value.trim());
-            mostrarMensajeGlobal("¡Registro completado y guardado con éxito!", "alert-success");
-            formulario.reset();
-            limpiarEstilosValidacion();
+            
+            // 1. Activar Spinner Bootstrap y deshabilitar botón
+            spinnerCarga.classList.remove("d-none");
+            btnEnviar.disabled = true;
+            textoBoton.textContent = " Procesando...";
+
+            // Captura de datos antes del reset del formulario
+            const nombreVal = inputNombre.value.trim();
+            const categoriaVal = selectCategoria.value;
+            const descripcionVal = txtDescripcion.value.trim();
+
+            // 2. Simular un retraso de procesamiento en red (1.2 segundos)
+            setTimeout(() => {
+                // Agregar tarjeta dinámica
+                agregarRegistro(nombreVal, categoriaVal, descripcionVal);
+                
+                // Mostrar alerta Bootstrap de éxito
+                mostrarMensajeGlobal("¡Registro completado y guardado con éxito!", "alert-success");
+                
+                // Inyectar datos en el Modal y mostrarlo
+                document.getElementById("modal-resumen-nombre").textContent = nombreVal;
+                document.getElementById("modal-resumen-categoria").textContent = categoriaVal;
+                document.getElementById("modal-resumen-descripcion").textContent = descripcionVal;
+                modalConfirmacion.show();
+
+                // Restaurar el botón y el formulario
+                formulario.reset();
+                limpiarEstilosValidacion();
+                spinnerCarga.classList.add("d-none");
+                btnEnviar.disabled = false;
+                textoBoton.textContent = "Enviar y Registrar";
+
+            }, 1200);
+
         } else {
             mostrarMensajeGlobal("Por favor, corrige los errores en los campos resaltados.", "alert-danger");
         }
@@ -103,9 +138,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- CREACIÓN Y GESTIÓN DE REGISTROS DINÁMICOS ---
 
     function agregarRegistro(nombre, categoria, descripcion) {
-        // Crear elementos dinámicos mediante createElement()
         const columna = document.createElement("div");
-        columna.className = "col-12 animate__animated animate__fadeIn";
+        columna.className = "col-12 opacity-100"; // Asegura visibilidad sin dependencias externas
 
         const tarjeta = document.createElement("div");
         tarjeta.className = "card p-3 border-start border-danger border-4 shadow-sm";
@@ -117,7 +151,6 @@ document.addEventListener("DOMContentLoaded", () => {
         titulo.className = "card-title text-danger fw-bold mb-1";
         titulo.textContent = nombre;
 
-        // CORRECCIÓN AQUÍ: Se usa guion bajo (_) para evitar errores de sintaxis en JS
         const sub_etiqueta = document.createElement("span");
         sub_etiqueta.className = "badge bg-secondary mb-2";
         sub_etiqueta.textContent = categoria;
@@ -130,15 +163,13 @@ document.addEventListener("DOMContentLoaded", () => {
         botonEliminar.className = "btn btn-outline-dark btn-sm fw-bold";
         botonEliminar.textContent = "Eliminar";
 
-        // Evento click independiente para eliminar registros
         botonEliminar.addEventListener("click", () => {
             columna.remove();
             actualizarContador(-1);
         });
 
-        // Ensamblar la estructura utilizando appendChild()
         cuerpoTarjeta.appendChild(titulo);
-        cuerpoTarjeta.appendChild(sub_etiqueta); // CORRECCIÓN AQUÍ
+        cuerpoTarjeta.appendChild(sub_etiqueta); 
         cuerpoTarjeta.appendChild(detalle);
         cuerpoTarjeta.appendChild(botonEliminar);
         tarjeta.appendChild(cuerpoTarjeta);

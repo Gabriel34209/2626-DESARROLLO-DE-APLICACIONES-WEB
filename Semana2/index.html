@@ -5,157 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coca-Cola - Destapa la Felicidad</title>
+    <!-- Bootstrap 5.3.2 CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <style>
-        /* ==========================================================================
-           ESTILOS PERSONALIZADOS CSS3
-           ========================================================================== */
-        :root {
-            --rojo-cocacola: #e31837;
-            --negro-profundo: #111111;
-            --gris-fondo: #f4f4f6;
-            --blanco: #ffffff;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--gris-fondo);
-            color: #333333;
-        }
-
-        /* Encabezado */
-        header {
-            background-color: var(--rojo-cocacola);
-            color: var(--blanco);
-            padding: 60px 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-        }
-
-        header h1 {
-            font-size: 3.8rem;
-            font-weight: 800;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-        }
-
-        header p {
-            font-size: 1.4rem;
-            font-style: italic;
-            font-weight: 500;
-            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Menú de Navegación */
-        .navbar {
-            background-color: var(--negro-profundo);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .navbar-brand, .nav-link {
-            color: var(--blanco) !important;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .nav-link:hover {
-            background-color: var(--rojo-cocacola);
-            border-radius: 4px;
-            color: var(--blanco) !important;
-        }
-
-        /* Secciones */
-        section {
-            background-color: var(--blanco);
-            padding: 50px 30px;
-            margin-bottom: 40px;
-            border-radius: 16px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
-        }
-
-        h2 {
-            color: var(--rojo-cocacola);
-            font-weight: 700;
-            position: relative;
-            padding-bottom: 12px;
-            margin-bottom: 30px;
-        }
-
-        h2::after {
-            content: '';
-            width: 70px;
-            height: 4px;
-            background-color: var(--negro-profundo);
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .text-justify {
-            text-align: justify;
-        }
-
-        /* 💥 EFECTO ZOOM INTERACTIVO EN LA IMAGEN 💥 */
-        .img-zoom-interactive {
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease;
-            cursor: pointer;
-        }
-
-        .img-zoom-interactive:hover {
-            transform: scale(1.08);
-            box-shadow: 0 15px 35px rgba(227, 24, 55, 0.3) !important;
-        }
-
-        /* Tarjetas de Productos */
-        .card {
-            border: none;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Animación de enfoque en inputs del formulario */
-        .form-control:focus, .form-select:focus {
-            border-color: var(--rojo-cocacola);
-            box-shadow: 0 0 0 0.25rem rgba(227, 24, 55, 0.25);
-        }
-
-        /* Barra Lateral */
-        aside {
-            background-color: var(--negro-profundo);
-            color: var(--blanco);
-            border-radius: 16px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Pie de Página */
-        footer {
-            background-color: var(--negro-profundo);
-            color: #bbbbbb;
-            border-top: 4px solid var(--rojo-cocacola);
-        }
-
-        /* Media Query para pantallas pequeñas */
-        @media (max-width: 576px) {
-            header h1 {
-                font-size: 2.5rem;
-            }
-            header p {
-                font-size: 1.1rem;
-            }
-            section {
-                padding: 30px 15px;
-            }
-            iframe {
-                height: 200px;
-            }
-        }
-    </style>
+    <!-- Archivo de estilos personalizados -->
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -167,6 +20,7 @@
         </div>
     </header>
 
+    <!-- Navbar de Bootstrap Responsiva -->
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container">
             <a class="navbar-brand d-lg-none" href="#">Menú</a>
@@ -276,12 +130,13 @@
             </div>
         </section>
 
-        <!-- SECCIÓN DE FORMULARIO CON VALIDACIONES MEJORADAS -->
+        <!-- SECCIÓN DE CONTACTO CON SISTEMA DE REJILLA RESPONSIVO (Computadora, Tablet, Celular) -->
         <section id="contacto" class="text-center">
             <h2>Contacto y Buzón de Sugerencias</h2>
             
-            <div class="row g-5 mt-2 text-start">
-                <div class="col-md-4 d-flex flex-column justify-content-start">
+            <div class="row g-4 mt-2 text-start">
+                <!-- Información de contacto -->
+                <div class="col-12 col-md-6 col-lg-4 d-flex flex-column justify-content-start">
                     <div class="mb-4">
                         <p class="mb-3"><strong>Dirección:</strong><br><span class="text-muted">Av. Amazonas y Mariana de Jesús, Quito, Ecuador</span></p>
                         <p class="mb-3"><strong>Teléfono:</strong><br><a href="tel:+593999999999" class="text-danger text-decoration-none fw-bold">+593 99 999 9999</a></p>
@@ -296,12 +151,12 @@
                     </div>
                 </div>
 
-                <!-- Formulario Interactivo con Contenedores de Feedback -->
-                <div class="col-md-4">
+                <!-- Formulario Interactivo con Contenedores de Feedback y Spinner -->
+                <div class="col-12 col-md-6 col-lg-4">
                     <div class="p-4 bg-light rounded-3 shadow-sm">
                         <h4 class="mb-4 text-center fw-bold text-secondary">Registrar Solicitud</h4>
                         
-                        <!-- Mensaje global de éxito o error general -->
+                        <!-- Mensaje global de alerta de Bootstrap -->
                         <div id="mensaje-alerta"></div>
 
                         <form id="formulario-sugerencias" novalidate>
@@ -329,13 +184,17 @@
                                 <div class="invalid-feedback">La descripción debe contener suficiente información (mínimo 10 caracteres).</div>
                                 <div class="valid-feedback">¡Descripción suficiente!</div>
                             </div>
-                            <button type="submit" class="btn btn-danger w-100 py-2 shadow-sm fw-bold">Enviar y Registrar</button>
+                            <!-- Botón con Spinner integrado de Bootstrap -->
+                            <button type="submit" id="btn-enviar" class="btn btn-danger w-100 py-2 shadow-sm fw-bold">
+                                <span id="spinner-carga" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                                <span id="texto-boton">Enviar y Registrar</span>
+                            </button>
                         </form>
                     </div>
                 </div>
 
-                <!-- Panel de Registros Recibidos -->
-                <div class="col-md-4">
+                <!-- Panel de Registros Recibidos (Tarjetas dinámicas) -->
+                <div class="col-12 col-lg-4">
                     <div class="p-4 bg-white border rounded-3 shadow-sm h-100">
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <h4 class="fw-bold text-secondary m-0">Registros Recibidos</h4>
@@ -343,7 +202,7 @@
                         </div>
                         
                         <div id="contenedor-registros" class="row g-3">
-                            <!-- Inyección dinámica -->
+                            <!-- Inyección dinámica desde script.js -->
                         </div>
                     </div>
                 </div>
@@ -368,6 +227,29 @@
 
     </main>
 
+    <!-- COMPONENTE: MODAL DE BOOTSTRAP PARA DETALLES DE REGISTRO -->
+    <div class="modal fade" id="modalConfirmacion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalConfirmacionLabel" aria-hidden="true">
+        <div class="modal-content modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title fw-bold" id="modalConfirmacionLabel">🎉 Registro Exitoso</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4 text-start">
+                    <p class="mb-2 text-muted">Hemos procesado tu sugerencia correctamente con los siguientes detalles:</p>
+                    <hr>
+                    <p class="mb-1"><strong>Nombre/Solicitante:</strong> <span id="modal-resumen-nombre" class="text-dark"></span></p>
+                    <p class="mb-1"><strong>Categoría:</strong> <span id="modal-resumen-categoria" class="badge bg-secondary"></span></p>
+                    <p class="mb-0"><strong>Descripción:</strong></p>
+                    <p id="modal-resumen-descripcion" class="text-secondary bg-light p-2 rounded small text-justify"></p>
+                </div>
+                <div class="modal-footer bg-light">
+                    <button type="button" class="btn btn-outline-dark fw-bold btn-sm px-4" data-bs-dismiss="modal">Entendido</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <footer class="text-center py-4 px-3 mt-auto">
         <div class="container">
             <p class="m-0 text-muted small">
@@ -377,6 +259,7 @@
         </div>
     </footer>
 
+    <!-- Bootstrap 5 Bundle JS (Incluye Popper requerido para Modals) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>
 </body>
