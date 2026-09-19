@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Productos - Coca-Cola{% endblock %}
+
+{% block content %}
+<h2 class="mb-4 text-danger">Módulo de Productos</h2>
+<table class="table table-striped table-hover shadow-sm">
+    <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Categoría</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for prod in productos %}
+        <tr>
+            <td>{{ prod.id }}</td>
+            <td>{{ prod.nombre }}</td>
+            <td>${{ prod.precio }}</td>
+            <td>{{ prod.categoria }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

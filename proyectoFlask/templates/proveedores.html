@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Proveedores - Coca-Cola{% endblock %}
+
+{% block content %}
+<h2 class="mb-4 text-danger">Módulo de Proveedores</h2>
+<div class="row">
+    {% for prov in proveedores %}
+    <div class="col-md-6 mb-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title text-danger">{{ prov.empresa }}</h5>
+                <p class="card-text"><strong>Insumo:</strong> {{ prov.insumo }}</p>
+                <p class="card-text"><small class="text-muted">Teléfono: {{ prov.telefono }}</small></p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Facturación - Coca-Cola{% endblock %}
+
+{% block content %}
+<h2 class="mb-4 text-danger">Módulo de Facturación</h2>
+<table class="table table-bordered shadow-sm">
+    <thead class="table-secondary">
+        <tr>
+            <th>Nº Factura</th>
+            <th>Cliente</th>
+            <th>Fecha</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for fact in facturas %}
+        <tr>
+            <td>{{ fact.factura_no }}</td>
+            <td>{{ fact.cliente }}</td>
+            <td>{{ fact.fecha }}</td>
+            <td class="fw-bold text-success">${{ fact.total }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
