@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Productos - Coca Cola System{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
+    <h2 class="text-danger mb-0">Catálogo de Productos</h2>
+    <a href="{{ url_for('formulario_producto') }}" class="btn btn-success">+ Nuevo Producto</a>
+</div>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+    {% for producto in productos %}
+    <div class="col">
+        <div class="card h-100 shadow-sm border-0">
+            <div class="card-body">
+                <h5 class="card-title text-dark">{{ producto.nombre|title }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ producto.categoria }}</h6>
+                <p class="card-text fw-bold text-danger fs-5">${{ "%.2f"|format(producto.precio) }}</p>
+            </div>
+            <div class="card-footer bg-transparent border-top-0 pb-3">
+                {% if producto.stock > 0 %}
+                    <span class="badge bg-success">Disponible ({{ producto.stock }} un.)</span>
+                {% else %}
+                    <span class="badge bg-danger">Agotado</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

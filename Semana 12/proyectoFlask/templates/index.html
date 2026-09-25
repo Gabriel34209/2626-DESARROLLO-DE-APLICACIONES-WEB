@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio - Coca-Cola System{% endblock %}
+
+{% block content %}
+<div class="p-5 mb-4 bg-light rounded-3 text-center shadow-sm border">
+    <div class="container-fluid py-3">
+        <!-- Variable simple con filtro de Jinja2 |upper -->
+        <h1 class="display-5 fw-bold text-danger">{{ titulo|upper }}</h1>
+        <p class="fs-4 text-muted">Plataforma centralizada para la gestión de distribución, productos y clientes.</p>
+        
+        <!-- Estructura condicional -->
+        {% if estado_empresa %}
+            <span class="badge bg-success fs-6">Sistema Operativo y En Línea</span>
+        {% else %}
+            <span class="badge bg-warning text-dark fs-6">Sistema en Mantenimiento</span>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
