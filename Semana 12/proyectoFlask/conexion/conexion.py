@@ -1,11 +1,11 @@
-import pymysql
+import psycopg2
 
 def obtener_conexion():
-    """Establece y retorna la conexión a la base de datos MySQL en XAMPP."""
-    return pymysql.connect(
-        host='localhost',
-        user='root',
-        password='',  # Por defecto en XAMPP está vacío
-        database='ferreteria',
-        cursorclass=pymysql.cursors.DictCursor
+    return psycopg2.connect(
+        host="localhost",
+        database="ferreteria",
+        user="postgres",
+        password="admin123",
+        port="5432",
+        client_encoding="utf8"
     )

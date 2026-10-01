@@ -24,12 +24,14 @@ login_manager.login_message_category = 'warning'
 def load_user(user_id):
     conexion = obtener_conexion()
     usuario = None
-    with conexion.cursor() as cursor:
-        cursor.execute('SELECT id, usuario, password FROM usuarios WHERE id = %s', (user_id,))
-        res = cursor.fetchone()
-        if res:
-            usuario = Usuario(id=res['id'], usuario=res['usuario'], password=res['password'])
-    conexion.close()
+    try:
+        with conexion.cursor() as cursor:
+            cursor.execute('SELECT id, usuario, password FROM usuarios WHERE id = %s', (user_id,))
+            res = cursor.fetchone()
+            if res:
+                usuario = Usuario(id=res['id'], usuario=res['usuario'], password=res['password'])
+    finally:
+        conexion.close()
     return usuario
 
 # --- DATOS EN MEMORIA (Para otros módulos) ---
@@ -93,10 +95,12 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         conexion = obtener_conexion()
-        with conexion.cursor() as cursor:
-            cursor.execute('SELECT * FROM usuarios WHERE usuario = %s', (form.usuario.data,))
-            usuario_db = cursor.fetchone()
-        conexion.close()
+        try:
+            with conexion.cursor() as cursor:
+                cursor.execute('SELECT * FROM usuarios WHERE usuario = %s', (form.usuario.data,))
+                usuario_db = cursor.fetchone()
+        finally:
+            conexion.close()
 
         if usuario_db and check_password_hash(usuario_db['password'], form.password.data):
             user_obj = Usuario(id=usuario_db['id'], usuario=usuario_db['usuario'], password=usuario_db['password'])
@@ -118,16 +122,24 @@ def logout():
     return redirect(url_for('index'))
 
 
-# --- MÓDULO PRODUCTOS (CRUD CON MYSQL - RUTAS PROTEGIDAS) ---
+# --- MÓDULO PRODUCTOS (CRUD CON POSTGRESQL Y JOIN - RUTAS PROTEGIDAS) ---
 
 @app.route('/productos')
 @login_required
 def productos():
     conexion = obtener_conexion()
-    with conexion.cursor() as cursor:
-        cursor.execute('SELECT * FROM productos')
-        productos_db = cursor.fetchall()
-    conexion.close()
+    try:
+        with conexion.cursor() as cursor:
+            # Consulta JOIN para relacionar productos con categorias
+            cursor.execute('''
+                SELECT p.id, p.nombre, p.precio, p.stock, c.nombre AS categoria
+                FROM productos p
+                LEFT JOIN categorias c ON p.categoria_id = c.id
+                ORDER BY p.id ASC
+            ''')
+            productos_db = cursor.fetchall()
+    finally:
+        conexion.close()
     return render_template('productos.html', productos=productos_db)
 
 
@@ -137,13 +149,15 @@ def formulario_producto():
     form = ProductoForm()
     if form.validate_on_submit():
         conexion = obtener_conexion()
-        with conexion.cursor() as cursor:
-            cursor.execute('''
-                INSERT INTO productos (nombre, precio, categoria, stock, categoria_id)
-                VALUES (%s, %s, %s, %s, 1)
-            ''', (form.nombre.data, form.precio.data, form.categoria.data, form.stock.data))
-        conexion.commit()
-        conexion.close()
+        try:
+            with conexion.cursor() as cursor:
+                cursor.execute('''
+                    INSERT INTO productos (nombre, precio, stock, categoria_id)
+                    VALUES (%s, %s, %s, %s)
+                ''', (form.nombre.data, form.precio.data, form.stock.data, 1))
+            conexion.commit()
+        finally:
+            conexion.close()
         return redirect(url_for('productos'))
     return render_template('formulario_producto.html', form=form)
 
@@ -155,26 +169,30 @@ def editar_producto(id):
     conexion = obtener_conexion()
     
     if request.method == 'GET':
-        with conexion.cursor() as cursor:
-            cursor.execute('SELECT * FROM productos WHERE id = %s', (id,))
-            producto = cursor.fetchone()
-        conexion.close()
-        
+        try:
+            with conexion.cursor() as cursor:
+                cursor.execute('SELECT * FROM productos WHERE id = %s', (id,))
+                producto = cursor.fetchone()
+        finally:
+            conexion.close()
+            
         if producto:
             form.nombre.data = producto['nombre']
             form.precio.data = producto['precio']
-            form.categoria.data = producto['categoria']
             form.stock.data = producto['stock']
     
     if form.validate_on_submit():
-        with conexion.cursor() as cursor:
-            cursor.execute('''
-                UPDATE productos 
-                SET nombre = %s, precio = %s, categoria = %s, stock = %s 
-                WHERE id = %s
-            ''', (form.nombre.data, form.precio.data, form.categoria.data, form.stock.data, id))
-        conexion.commit()
-        conexion.close()
+        conexion = obtener_conexion()
+        try:
+            with conexion.cursor() as cursor:
+                cursor.execute('''
+                    UPDATE productos 
+                    SET nombre = %s, precio = %s, stock = %s 
+                    WHERE id = %s
+                ''', (form.nombre.data, form.precio.data, form.stock.data, id))
+            conexion.commit()
+        finally:
+            conexion.close()
         return redirect(url_for('productos'))
         
     return render_template('formulario_producto.html', form=form, es_edicion=True)
@@ -184,10 +202,12 @@ def editar_producto(id):
 @login_required
 def eliminar_producto(id):
     conexion = obtener_conexion()
-    with conexion.cursor() as cursor:
-        cursor.execute('DELETE FROM productos WHERE id = %s', (id,))
-    conexion.commit()
-    conexion.close()
+    try:
+        with conexion.cursor() as cursor:
+            cursor.execute('DELETE FROM productos WHERE id = %s', (id,))
+        conexion.commit()
+    finally:
+        conexion.close()
     return redirect(url_for('productos'))
 
 
