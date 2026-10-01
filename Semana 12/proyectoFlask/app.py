@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, flash, request
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
+from psycopg2.extras import RealDictCursor
 from conexion.conexion import obtener_conexion
 from models import Usuario
 from forms.producto_form import ProductoForm
@@ -25,11 +26,14 @@ def load_user(user_id):
     conexion = obtener_conexion()
     usuario = None
     try:
-        with conexion.cursor() as cursor:
-            cursor.execute('SELECT id, usuario, password FROM usuarios WHERE id = %s', (user_id,))
+        # Usa RealDictCursor para poder acceder por nombre de columna (ej: res['id'])
+        with conexion.cursor(cursor_factory=RealDictCursor) as cursor:
+            cursor.execute('SELECT * FROM usuarios WHERE id = %s', (user_id,))
             res = cursor.fetchone()
             if res:
-                usuario = Usuario(id=res['id'], usuario=res['usuario'], password=res['password'])
+                # Soporta tanto 'usuario' como 'username'
+                nombre_usuario = res.get('usuario') or res.get('username')
+                usuario = Usuario(id=res['id'], usuario=nombre_usuario, password=res['password'])
     finally:
         conexion.close()
     return usuario
@@ -72,8 +76,8 @@ def registro():
         try:
             with conexion.cursor() as cursor:
                 cursor.execute(
-                    'INSERT INTO usuarios (usuario, password) VALUES (%s, %s)',
-                    (form.usuario.data, hashed_password)
+                    'INSERT INTO usuarios (usuario, username, password) VALUES (%s, %s, %s)',
+                    (form.usuario.data, form.usuario.data, hashed_password)
                 )
             conexion.commit()
             flash('Usuario registrado exitosamente. Por favor inicia sesión.', 'success')
@@ -96,14 +100,15 @@ def login():
     if form.validate_on_submit():
         conexion = obtener_conexion()
         try:
-            with conexion.cursor() as cursor:
-                cursor.execute('SELECT * FROM usuarios WHERE usuario = %s', (form.usuario.data,))
+            with conexion.cursor(cursor_factory=RealDictCursor) as cursor:
+                cursor.execute('SELECT * FROM usuarios WHERE usuario = %s OR username = %s', (form.usuario.data, form.usuario.data))
                 usuario_db = cursor.fetchone()
         finally:
             conexion.close()
 
         if usuario_db and check_password_hash(usuario_db['password'], form.password.data):
-            user_obj = Usuario(id=usuario_db['id'], usuario=usuario_db['usuario'], password=usuario_db['password'])
+            nombre_usuario = usuario_db.get('usuario') or usuario_db.get('username')
+            user_obj = Usuario(id=usuario_db['id'], usuario=nombre_usuario, password=usuario_db['password'])
             login_user(user_obj)
             flash(f'¡Bienvenido/a, {user_obj.usuario}!', 'success')
             next_page = request.args.get('next')
@@ -129,8 +134,7 @@ def logout():
 def productos():
     conexion = obtener_conexion()
     try:
-        with conexion.cursor() as cursor:
-            # Consulta JOIN para relacionar productos con categorias
+        with conexion.cursor(cursor_factory=RealDictCursor) as cursor:
             cursor.execute('''
                 SELECT p.id, p.nombre, p.precio, p.stock, c.nombre AS categoria
                 FROM productos p
@@ -170,7 +174,7 @@ def editar_producto(id):
     
     if request.method == 'GET':
         try:
-            with conexion.cursor() as cursor:
+            with conexion.cursor(cursor_factory=RealDictCursor) as cursor:
                 cursor.execute('SELECT * FROM productos WHERE id = %s', (id,))
                 producto = cursor.fetchone()
         finally:
