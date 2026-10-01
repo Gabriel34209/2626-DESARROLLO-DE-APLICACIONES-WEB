@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-5">
+        <div class="card shadow border-0">
+            <div class="card-body p-4">
+                <h3 class="card-title text-center text-danger mb-4 font-weight-bold">Iniciar Sesión</h3>
+                
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+                <form method="POST">
+                    {{ form.hidden_tag() }}
+                    <div class="mb-3">
+                        {{ form.usuario.label(class="form-label") }}
+                        {{ form.usuario(class="form-control", placeholder="Ingresa tu usuario") }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.password.label(class="form-label") }}
+                        {{ form.password(class="form-control", placeholder="Ingresa tu contraseña") }}
+                    </div>
+                    <div class="d-grid gap-2 mt-4">
+                        {{ form.submit(class="btn btn-danger text-white fw-bold") }}
+                    </div>
+                </form>
+                <div class="text-center mt-3">
+                    <small>¿No tienes cuenta? <a href="{{ url_for('registro') }}" class="text-danger">Regístrate aquí</a></small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
