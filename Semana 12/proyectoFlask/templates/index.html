@@ -1,20 +1,78 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
 {% block title %}Inicio - Coca-Cola System{% endblock %}
 
 {% block content %}
-<div class="p-5 mb-4 bg-light rounded-3 text-center shadow-sm border">
-    <div class="container-fluid py-3">
-        <!-- Variable simple con filtro de Jinja2 |upper -->
-        <h1 class="display-5 fw-bold text-danger">{{ titulo|upper }}</h1>
-        <p class="fs-4 text-muted">Plataforma centralizada para la gestión de distribución, productos y clientes.</p>
-        
-        <!-- Estructura condicional -->
-        {% if estado_empresa %}
-            <span class="badge bg-success fs-6">Sistema Operativo y En Línea</span>
-        {% else %}
-            <span class="badge bg-warning text-dark fs-6">Sistema en Mantenimiento</span>
-        {% endif %}
+<div class="container my-4">
+    <!-- Seccion Hero / Banner Llamativo -->
+    <div class="p-5 mb-4 bg-light rounded-3 shadow-sm border-start border-danger border-5">
+        <div class="container-fluid py-3">
+            <h1 class="display-4 fw-bold text-danger">Siente la Magia en Cada Distribución</h1>
+            <p class="col-md-9 fs-5 text-muted">
+                Bienvenido a la plataforma centralizada de gestión. Administra inventarios de productos, catálogos de proveedores, clientes y emisión de facturas de manera eficiente y en tiempo real.
+            </p>
+            {% if not current_user.is_authenticated %}
+                <a href="{{ url_for('login') }}" class="btn btn-danger btn-lg me-2 fw-bold px-4">Iniciar Sesión</a>
+                <a href="{{ url_for('registro') }}" class="btn btn-outline-danger btn-lg px-4">Registrarse</a>
+            {% else %}
+                <a href="{{ url_for('productos') }}" class="btn btn-danger btn-lg fw-bold px-4">Ir a Productos</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Contenido Multimedial y Video Promocional -->
+    <div class="row my-5 align-items-center">
+        <div class="col-lg-6 mb-4 mb-lg-0">
+            <h2 class="fw-bold text-dark mb-3">Compromiso y Calidad Global</h2>
+            <p class="lead text-secondary">
+                Nuestra red de distribución asegura que los productos emblemáticos de Coca-Cola lleguen a cada rincón con los más altos estándares de frescura y logística.
+            </p>
+            <ul class="list-unstyled">
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-danger me-2"></i> Control total de stock y variantes.</li>
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-danger me-2"></i> Gestión automatizada de proveedores y clientes.</li>
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-danger me-2"></i> Facturación rápida y almacenamiento en base de datos.</li>
+            </ul>
+        </div>
+        <div class="col-lg-6">
+            <div class="ratio ratio-16x9 shadow rounded overflow-hidden">
+                <iframe 
+                    src="https://www.youtube.com/embed/VGa1imApfdg" 
+                    title="Coca-Cola Commercial" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tarjetas Informativas / Secciones del Sistema -->
+    <div class="row text-center mt-5">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body">
+                    <div class="fs-1 text-danger mb-2">📦</div>
+                    <h5 class="card-title fw-bold">Gestión de Inventario</h5>
+                    <p class="card-text text-muted">Supervisa bebidas, empaques y existencias disponibles en almacén en tiempo real.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body">
+                    <div class="fs-1 text-danger mb-2">👥</div>
+                    <h5 class="card-title fw-bold">Clientes & Proveedores</h5>
+                    <p class="card-text text-muted">Mantén un registro organizado de tus aliados comerciales y de tu cartera de clientes.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body">
+                    <div class="fs-1 text-danger mb-2">🧾</div>
+                    <h5 class="card-title fw-bold">Facturación Digital</h5>
+                    <p class="card-text text-muted">Genera comprobantes de compra y venta de forma ágil y centralizada.</p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
